@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Sale;
-use CarApp\Models\Carbon;
+use Carbon\Carbon;
 use App\Models\SoldProduct;
 use App\Models\Transaction;
 use App\Models\PaymentMethod;
