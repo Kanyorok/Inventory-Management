@@ -45,9 +45,9 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::resource('transactions', TransactionController::class)->except(['create', 'show']);
     Route::get('transactions/stats/{year?}/{month?}/{day?}', ['as' => 'transactions.stats', 'uses' => [TransactionController::class, 'stats']]);
-    Route::get('transactions/{type}', ['as' => 'transactions.type', 'uses' => [TransactionController::class, 'type']]);
-    Route::get('transactions/{type}/create', ['as' => 'transactions.create', 'uses' => [TransactionController::class, 'create']]);
-    Route::get('transactions/{transaction}/edit', ['as' => 'transactions.edit', 'uses' => [TransactionController::class, 'edit']]);
+    Route::get('transactions/{type}', [TransactionController::class, 'type'])->name('transactions.type');
+    Route::get('transactions/{type}/create', [TransactionController::class, 'create'])->name('transactions.create');
+    Route::get('transactions/{transaction}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
 
     Route::get('inventory/stats/{year?}/{month?}/{day?}', ['as' => 'inventory.stats', 'uses' => [InventoryController::class, 'stats']]);
     Route::resource('inventory/receipts', ReceiptController::class)->except(['edit', 'update']);
