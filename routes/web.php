@@ -59,23 +59,23 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('inventory/receipts/{receipt}/product/{receivedproduct}', [ReceiptController::class, 'destroyproduct'])->name('receipts.product.destroy');
 
     Route::resource('sales', SaleController::class)->except(['edit', 'update']);
-    Route::get('sales/{sale}/finalize', ['as' => 'sales.finalize', 'uses' => [SaleController::class, 'finalize']]);
-    Route::get('sales/{sale}/product/add', ['as' => 'sales.product.add', 'uses' => [SaleController::class,'addproduct']]);
-    Route::get('sales/{sale}/product/{soldproduct}/edit', ['as' => 'sales.product.edit', 'uses' => [SaleController::class, 'editproduct']]);
-    Route::post('sales/{sale}/product', ['as' => 'sales.product.store', 'uses' => [SaleController::class, 'storeproduct']]);
-    Route::match(['put', 'patch'], 'sales/{sale}/product/{soldproduct}', ['as' => 'sales.product.update', 'uses' => [SaleController::class, 'updateproduct']]);
-    Route::delete('sales/{sale}/product/{soldproduct}', ['as' => 'sales.product.destroy', 'uses' => [SaleController::class, 'destroyproduct']]);
+    Route::get('sales/{sale}/finalize', [SaleController::class, 'finalize'])->name('sales.finalize');
+    Route::get('sales/{sale}/product/add', [SaleController::class,'addproduct'])-name('sales.product.add');
+    Route::get('sales/{sale}/product/{soldproduct}/edit', [SaleController::class, 'editproduct'])->name('sales.product.edit');
+    Route::post('sales/{sale}/product', [SaleController::class, 'storeproduct'])->name('sales.product.store');
+    Route::match(['put', 'patch'], 'sales/{sale}/product/{soldproduct}', [SaleController::class, 'updateproduct'])->name('sales.product.update');
+    Route::delete('sales/{sale}/product/{soldproduct}', [SaleController::class, 'destroyproduct'])->name('sales.product.destroy');
 
-    Route::get('clients/{client}/transactions/add', ['as' => 'clients.transactions.add', 'uses' => [ClientController::class,'addtransaction']]);
+    Route::get('clients/{client}/transactions/add', [ClientController::class,'addtransaction'])->name('clients.transactions.add');
 
-    Route::get('profile', ['as' => 'profile.edit', 'uses' => [ProfileController::class, 'edit']]);
-    Route::match(['put', 'patch'], 'profile', ['as' => 'profile.update', 'uses' => [ProfileController::class,'update']]);
-    Route::match(['put', 'patch'], 'profile/password', ['as' => 'profile.password', 'uses' => [ProfileController::class,'password']]);
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::match(['put', 'patch'], 'profile', [ProfileController::class,'update'])->name('profile.update');
+    Route::match(['put', 'patch'], 'profile/password', [ProfileController::class,'password'])->name('profile.password');
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('icons', ['as' => 'pages.icons', 'uses' => [PageController::class, 'icons']]);
-    Route::get('notifications', ['as' => 'pages.notifications', 'uses' => [PageController::class, 'notifications']]);
-    Route::get('tables', ['as' => 'pages.tables', 'uses' => [PageController::class, 'tables']]);
-    Route::get('typography', ['as' => 'pages.typography', 'uses' => [PageController::class, 'typography']]);
+    Route::get('icons', [PageController::class, 'icons'])->name('pages.icons');
+    Route::get('notifications', [PageController::class, 'notifications'])->name('pages.notifications');
+    Route::get('tables', [PageController::class, 'tables'])->name('pages.tables');
+    Route::get('typography', [PageController::class, 'typography'])->name('pages.typography');
 });
