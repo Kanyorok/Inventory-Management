@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
     
     Route::resource('transactions', TransactionController::class)->except(['create', 'show']);
-    Route::get('transactions/stats/{year?}/{month?}/{day?}', ['as' => 'transactions.stats', 'uses' => [TransactionController::class, 'stats']]);
+    Route::get('transactions/stats/{year?}/{month?}/{day?}', [TransactionController::class, 'stats'])->name('transactions.stats');
     Route::get('transactions/{type}', [TransactionController::class, 'type'])->name('transactions.type');
     Route::get('transactions/{type}/create', [TransactionController::class, 'create'])->name('transactions.create');
     Route::get('transactions/{transaction}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
@@ -60,7 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('sales', SaleController::class)->except(['edit', 'update']);
     Route::get('sales/{sale}/finalize', [SaleController::class, 'finalize'])->name('sales.finalize');
-    Route::get('sales/{sale}/product/add', [SaleController::class,'addproduct'])-name('sales.product.add');
+    Route::get('sales/{sale}/product/add', [SaleController::class,'addproduct'])->name('sales.product.add');
     Route::get('sales/{sale}/product/{soldproduct}/edit', [SaleController::class, 'editproduct'])->name('sales.product.edit');
     Route::post('sales/{sale}/product', [SaleController::class, 'storeproduct'])->name('sales.product.store');
     Route::match(['put', 'patch'], 'sales/{sale}/product/{soldproduct}', [SaleController::class, 'updateproduct'])->name('sales.product.update');
